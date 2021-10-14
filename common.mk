@@ -399,17 +399,17 @@ PRODUCT_PACKAGES += \
 
 # NFC
 PRODUCT_PACKAGES += \
-    android.hardware.nfc@1.0:64 \
-    android.hardware.nfc@1.1:64 \
-    android.hardware.nfc@1.2:64 \
-    android.hardware.nfc@1.2.vendor \
-    android.hardware.secure_element@1.0:64 \
-    android.hardware.secure_element@1.2.vendor \
+    android.hardware.nfc_snxxx@1.2-service \
+    android.hardware.secure_element_snxxx@1.2-service \
     com.android.nfc_extras \
+    libchrome.vendor \
+    NfcNci \
     SecureElement \
-    Tag \
-    vendor.nxp.nxpese@1.0:64 \
-    vendor.nxp.nxpnfc@1.0:64
+    Tag
+
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/configs/libnfc-nxp.conf:$(TARGET_COPY_OUT_VENDOR)/etc/libnfc-nxp.conf \
+    $(LOCAL_PATH)/configs/libnfc-nxp_RF.conf:$(TARGET_COPY_OUT_VENDOR)/etc/libnfc-nxp_RF.conf
 
 # OMX
 PRODUCT_PACKAGES += \
