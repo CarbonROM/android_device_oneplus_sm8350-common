@@ -4,9 +4,7 @@
     "target_path": "hardware/oneplus"
   },
   {
-    "remote": "lineage",
-    "repository": "LineageOS/android_kernel_oneplus_sm8350",
-    "target_path": "kernel/oneplus/sm8350",
-    "revision": "lineage-18.1"
+    "repository": "CarbonROM/android_kernel_oneplus_sm8350",
+    "target_path": "kernel/oneplus/sm8350"
   }
 ]
