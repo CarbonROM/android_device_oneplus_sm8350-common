@@ -1,0 +1,10 @@
+[
+  {
+    "repository": "CarbonROM/android_hardware_oplus",
+    "target_path": "hardware/oplus"
+  },
+  {
+    "repository": "CarbonROM/android_kernel_oneplus_sm8350",
+    "target_path": "kernel/oneplus/sm8350"
+  }
+]
