@@ -69,8 +69,11 @@ function blob_fixup() {
         system_ext/lib64/libwfdnative.so)
             sed -i "s/android.hidl.base@1.0.so/libhidlbase.so\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00/" "${2}"
             ;;
-        vendor/etc/media_lahaina/video_system_specs.json)
+        vendor/etc/media_*/video_system_specs.json)
             sed -i "/max_retry_alloc_output_timeout/ s/1000/0/" "${2}"
+            ;;
+        vendor/etc/msm_irqbalance.conf)
+            sed -i "s/IGNORED_IRQ=27,23,38$/&,115,332/" "${2}"
             ;;
         vendor/lib/libgui1_vendor.so)
             "${PATCHELF}" --replace-needed "libui.so" "libui-v30.so" "${2}"
@@ -83,17 +86,17 @@ function blob_fixup() {
 
 if [ -z "${ONLY_TARGET}" ]; then
     # Initialize the helper for common device
-    setup_vendor "${DEVICE_COMMON}" "${VENDOR}" "${ANDROID_ROOT}" true "${CLEAN_VENDOR}"
+    setup_vendor "${DEVICE_COMMON}" "${VENDOR_COMMON:-$VENDOR}" "${ANDROID_ROOT}" true "${CLEAN_VENDOR}"
 
     extract "${MY_DIR}/proprietary-files.txt" "${SRC}" "${KANG}" --section "${SECTION}"
 fi
 
-if [ -z "${ONLY_COMMON}" ] && [ -s "${MY_DIR}/../${DEVICE}/proprietary-files.txt" ]; then
+if [ -z "${ONLY_COMMON}" ] && [ -s "${MY_DIR}/../../${VENDOR}/${DEVICE}/proprietary-files.txt" ]; then
     # Reinitialize the helper for device
-    source "${MY_DIR}/../${DEVICE}/extract-files.sh"
+    source "${MY_DIR}/../../${VENDOR}/${DEVICE}/extract-files.sh"
     setup_vendor "${DEVICE}" "${VENDOR}" "${ANDROID_ROOT}" false "${CLEAN_VENDOR}"
 
-    extract "${MY_DIR}/../${DEVICE}/proprietary-files.txt" "${SRC}" "${KANG}" --section "${SECTION}"
+    extract "${MY_DIR}/../../${VENDOR}/${DEVICE}/proprietary-files.txt" "${SRC}" "${KANG}" --section "${SECTION}"
 fi
 
 "${MY_DIR}/setup-makefiles.sh"
